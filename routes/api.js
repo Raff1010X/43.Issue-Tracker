@@ -1,27 +1,14 @@
 'use strict';
 
-module.exports = function (app) {
+const express = require('express');
+const issueController = require('../controllers/issueController');
 
-  app.route('/api/issues/:project')
-  
-    .get(function (req, res){
-      let project = req.params.project;
-      
-    })
-    
-    .post(function (req, res){
-      let project = req.params.project;
-      
-    })
-    
-    .put(function (req, res){
-      let project = req.params.project;
-      
-    })
-    
-    .delete(function (req, res){
-      let project = req.params.project;
-      
-    });
-    
-};
+const router = express.Router({ mergeParams: true });
+
+router.route('/:project')
+.post(issueController.postIssue)
+.get(issueController.getIssue)
+.put(issueController.updateIssue)
+.delete(issueController.deleteIssue);
+
+module.exports = router;

@@ -1,10 +1,22 @@
 'use strict';
+//+ Uncaught exception handler
+process.on('uncaughtException', (err) => {
+  console.log('UNCAUGHT EXCEPTION! 💥 Shutting down...');
+  console.log(err.name, err.message);
+  process.exit(1);
+});
+
+//+ Error handling
+const globalErrorHandler = require('./controllers/errorController'); // custom error handler
 
 const express     = require('express');
 const bodyParser  = require('body-parser');
 const expect      = require('chai').expect;
 const cors        = require('cors');
-require('dotenv').config();
+
+//+ Load environment variables from .env file
+const dotenv = require('dotenv');
+dotenv.config({ path: './config.env' });
 
 const apiRoutes         = require('./routes/api.js');
 const fccTestingRoutes  = require('./routes/fcctesting.js');
@@ -16,10 +28,26 @@ app.use('/public', express.static(process.cwd() + '/public'));
 
 app.use(cors({origin: '*'})); //For FCC testing purposes only
 
-
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+//+ Connect to MongoDB
+const mongoose = require('mongoose');
+
+let DB = process.env.DATABASE;
+DB = DB.replace('<PASSWORD>', process.env.PASSWORD);
+DB = DB.replace('<USERNAME>', process.env.USER_NAME);
+
+const DB_OPTIONS = {
+    useNewUrlParser: true,
+    //useCreateIndex: true,
+    //useFindAndModify: false,
+    useUnifiedTopology: true,
+};
+mongoose
+    .connect(DB, DB_OPTIONS)
+    .then(() => console.log('DB connection successful'))
+    .catch(() => console.log('Problem with database connection'));
 
 //Sample front-end
 app.route('/:project/')
@@ -36,8 +64,8 @@ app.route('/')
 //For FCC testing purposes
 fccTestingRoutes(app);
 
-//Routing for API 
-apiRoutes(app);  
+//Routing for API  
+app.use('/api/issues', apiRoutes);
     
 //404 Not Found Middleware
 app.use(function(req, res, next) {
@@ -45,6 +73,9 @@ app.use(function(req, res, next) {
     .type('text')
     .send('Not Found');
 });
+
+//+ Error handling middleware
+app.use(globalErrorHandler); // this is the last middleware
 
 //Start our server and tests!
 const listener = app.listen(process.env.PORT || 3000, function () {
@@ -60,6 +91,15 @@ const listener = app.listen(process.env.PORT || 3000, function () {
       }
     }, 3500);
   }
+});
+
+//+ Unhandled promise rejection
+process.on('unhandledRejection', (err) => {
+  console.log('UNHANDLED REJECTION! 💥 Shutting down...');
+  console.log(err.name, err.message);
+  server.close(() => {
+      process.exit(1);
+  });
 });
 
 module.exports = app; //for testing
