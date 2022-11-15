@@ -22,9 +22,17 @@ const issueSchema = new mongoose.Schema(
         status_text: { type: String, default: '' },
     },
     {
-        toJSON: { virtuals: true },
         toObject: { virtuals: true },
     }
 );
 
-module.exports = mongoose.model('Issue', issueSchema);
+issueSchema.set('toJSON', {
+    virtuals: true,
+    transform: (doc, ret, options) => {
+        delete ret.__v;
+        delete ret.id;
+    },
+});
+
+// module.exports = mongoose.model('Issue', issueSchema);
+module.exports = issueSchema;
