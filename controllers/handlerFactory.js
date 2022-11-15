@@ -12,7 +12,7 @@ exports.createOne = () =>
 exports.getAll = () =>
     catchAsync(async (req, res, next) => {
         const Model = mongoose.model(req.params.project, issueSchema);
-        let doc = await Model.find();
+        let doc = await Model.find(req.query);
         res.status(200).json(doc);
     });
 
