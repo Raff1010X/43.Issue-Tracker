@@ -2,10 +2,9 @@
 //+ Error handling main function
 module.exports = (err, req, res, next) => {
     err.statusCode = err.statusCode || 500;
-    err.status = err.status || 'error';
 
     if (err._message === 'Issue validation failed') {
-        res.status(err.statusCode).json({
+        res.status(200).json({
             error: 'required field(s) missing',
         });
     } else {
@@ -13,5 +12,5 @@ module.exports = (err, req, res, next) => {
             error: err,
         });
     }
-    
+
 };
