@@ -7,10 +7,11 @@ This is the boilerplate for the Issue Tracker project. Instructions for building
 ## [Issue Tracker](https://www.freecodecamp.org/learn/quality-assurance/quality-assurance-projects/issue-tracker)
 
 Working example: https://app-issue-track.herokuapp.com/
+Working example: https://43Issue-Tracker.raffraff1.repl.co
 
 My git repo: https://github.com/Raff1010X/01.Roadmap
 
 <p align="center">
-<img src="./images/1.png" alt="example image" width=100%">
+<img src="./images/1.png" alt="example image" width=50%">
 </p>
 
