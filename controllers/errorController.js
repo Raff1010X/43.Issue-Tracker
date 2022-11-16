@@ -1,4 +1,3 @@
-
 //+ Error handling main function
 module.exports = (err, req, res, next) => {
     err.statusCode = err.statusCode || 500;
@@ -7,10 +6,13 @@ module.exports = (err, req, res, next) => {
         res.status(200).json({
             error: 'required field(s) missing',
         });
+    } else if (err.name === 'CastError') {
+        res.status(200).json({
+            error: 'missing _id',
+        });
     } else {
         res.status(err.statusCode).json({
             error: err,
         });
     }
-
 };
