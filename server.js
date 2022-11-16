@@ -40,8 +40,6 @@ DB = DB.replace('<USERNAME>', process.env.USER_NAME);
 
 const DB_OPTIONS = {
     useNewUrlParser: true,
-    //useCreateIndex: true,
-    //useFindAndModify: false,
     useUnifiedTopology: true,
 };
 mongoose
