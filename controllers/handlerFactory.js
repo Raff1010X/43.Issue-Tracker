@@ -17,20 +17,7 @@ exports.getAll = () =>
     });
 
 exports.updateOne = () =>
-    catchAsync(async (req, res, next) => {
-        if (!req.body._id) {
-            res.status(200).json({
-                error: 'missing _id',
-            });
-            return;
-        }
-        if (Object.keys(req.body).length <= 1) {
-            res.status(200).json({
-                error: 'no update field(s) sent',
-                _id: req.body._id,
-            });
-            return;
-        }        
+    catchAsync(async (req, res, next) => {       
         const Model = mongoose.model(req.params.project, issueSchema);
         let doc = await Model.updateOne(
             { _id: req.body._id },
@@ -50,12 +37,6 @@ exports.updateOne = () =>
 
 exports.deleteOne = () =>
     catchAsync(async (req, res, next) => {
-        if (!req.body._id) {
-            res.status(200).json({
-                error: 'missing _id',
-            });
-            return;
-        }
         const Model = mongoose.model(req.params.project, issueSchema);
         let doc = await Model.deleteOne({ _id: req.body._id });
         if (doc.deletedCount === 1)
