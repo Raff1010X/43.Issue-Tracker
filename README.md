@@ -8,8 +8,6 @@ This is the boilerplate for the Issue Tracker project. Instructions for building
 
 Working example: https://app-issue-track.herokuapp.com/
 
-Working example: https://43Issue-Tracker.raffraff1.repl.co
-
 My git repo: https://github.com/Raff1010X/01.Roadmap
 
 <p align="center">
