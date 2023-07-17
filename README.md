@@ -2,7 +2,7 @@
 
 ## [Issue Tracker](https://www.freecodecamp.org/learn/quality-assurance/quality-assurance-projects/issue-tracker)
 
-Working example: https://app-issue-track.webdev.priv.pl/
+Working example: http://app-issue-track.webdev.priv.pl/
 
 My git repo: https://github.com/Raff1010X/01.Roadmap
 
